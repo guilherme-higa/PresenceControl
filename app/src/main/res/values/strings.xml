@@ -7,10 +7,17 @@
 
     <!-- Fragment Home -->
     <string name="btn_login">Login</string>
+    <string name="tv_app_title">Presence Control</string>
     <string name="btn_forgot_password">Forgot Password</string>
     <string name="btn_not_user_yet">Create account</string>
     <string name="btn_clean_edit">Clean Fields</string>
     <string name="edit_ra_login">RA</string>
     <string name="edit_password_login">PASSWORD</string>
+
+    <!-- Fragment Routine Details -->
+    <string name="routine_details">Routine Details</string>
+    <string name="tv_student_name">Nome do aluno</string>
+    <string name="menu_qrcode">QRcode</string>
+    <string name="menu_edit">edit</string>
 
 </resources>
