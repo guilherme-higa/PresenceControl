@@ -4,6 +4,6 @@
         android:id="@+id/menu_qrcode"
         android:title="@string/menu_qrcode"/>
     <item
-        android:id="@+id/menu_edit"
+        android:id="@+id/menu_aboutApp"
         android:title="@string/menu_edit" />
 </menu>

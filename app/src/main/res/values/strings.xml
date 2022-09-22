@@ -13,11 +13,20 @@
     <string name="btn_clean_edit">Clean Fields</string>
     <string name="edit_ra_login">RA</string>
     <string name="edit_password_login">PASSWORD</string>
+    <string name="empty"></string>
+    <string name="warning_pres_back_again">Please click BACK again to exit</string>
+    <string name="tlc_numeric">0123456789</string>
 
     <!-- Fragment Routine Details -->
     <string name="routine_details">Routine Details</string>
     <string name="tv_student_name">Nome do aluno</string>
+    <!-- Menu Options -->
     <string name="menu_qrcode">QRcode</string>
-    <string name="menu_edit">edit</string>
+    <string name="menu_edit">About App</string>
+
+    <!-- Fragment About App -->
+    <string name="tv_about_title">Presence Control App</string>
+    <string name="tv_version_number">Version %s</string>
+    <string name="tv_latest_installed">The latest version is already installed</string>
 
 </resources>
