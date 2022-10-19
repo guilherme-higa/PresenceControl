@@ -20,7 +20,7 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
     public static final String TAG = FragmentRoutineDetails.class.getSimpleName();
 
     private static final int DOUBLE_PRESS_INTERVAL = 2000;
-    
+
     private boolean mDoubleBackPressed = false;
     private OnBackPressedCallback mDefaultBackPressedCallback;
     public FragmentRoutineDetails() { super(R.layout.fragment_routine_details, FragmentRoutineDetailsBinding::bind); }

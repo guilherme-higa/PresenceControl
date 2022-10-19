@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.presencecontroltestapp.R;
+import com.example.presencecontroltestapp.database.MongoDatabase;
 import com.example.presencecontroltestapp.databinding.FragmentHomeBinding;
 
 public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
@@ -26,8 +26,8 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
     private boolean mDoubleBackPressed = false;
     private OnBackPressedCallback mDefaultBackPressedCallback;
     private ActivityResultLauncher<String[]> mPermissionRequest;
+    private MongoDatabase mMongoDatabase;
 
-    private Button mBtnLogin, mBtnClean, mBtnRecoveryPassword, mBtnCreateAccount;
     private EditText mEtLogin;
     private EditText mEtPassword;
 
@@ -35,22 +35,21 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
 
     @Override
     public void onBindCreated(FragmentHomeBinding binding) {
-        mBtnLogin = binding.btnLogin;
-        mBtnClean = binding.btnCleanEdit;
-        mBtnRecoveryPassword = binding.btnForgotPassword;
-        mBtnCreateAccount = binding.btnNotUser;
-
         mEtLogin =  binding.textRa;
         mEtPassword = binding.textPassword;
 
-        binding.btnLogin.setOnClickListener(v -> onClick(mBtnLogin));
+        binding.btnLogin.setOnClickListener(v -> onClick(binding.btnLogin));
         binding.btnCleanEdit.setOnClickListener(v -> cleanEtFields());
-        binding.btnForgotPassword.setOnClickListener(v -> onClick(mBtnRecoveryPassword));
-        binding.btnNotUser.setOnClickListener(v -> onClick(mBtnRecoveryPassword));
+        binding.btnForgotPassword.setOnClickListener(v -> onClick(binding.btnForgotPassword));
+        binding.btnNotUser.setOnClickListener(v -> onClick(binding.btnForgotPassword));
 
+        //add permissions here
         String[] permissionsToRequest = new String[]{
                 Manifest.permission.CAMERA
         };
+
+        mMongoDatabase = new MongoDatabase(requireContext(), "data",
+                "dede");
 
         mDefaultBackPressedCallback = getDefaultOnBackPressed();
         setBackPressedCallback(mDefaultBackPressedCallback);
@@ -92,13 +91,15 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
     }
 
     private boolean checkCredentials() {
+        if (mMongoDatabase.connectToMongoDB("de", "dede")) return false;
         String login = mEtLogin.getText().toString();
         String password = mEtLogin.getText().toString();
 
-        if (TextUtils.isEmpty(login) || TextUtils.isEmpty(password)) return false;
+        if (TextUtils.isEmpty(login) || TextUtils.isEmpty(password) || login == null
+        || password == null) return false;
 
         boolean valid = false;
-        if (isValid(login)) {
+        if (isValid(login) && isValid(password)) {
             valid = true;
         }
         return valid;
@@ -107,7 +108,6 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
     private void cleanEtFields() {
         mEtLogin.setText(R.string.empty);
         mEtPassword.setText(R.string.empty);
-
         mEtLogin.requestFocus();
     }
 
@@ -145,8 +145,6 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
             case R.id.btnNotUser:
                 changeFragment(FragmentNotUser.class);
                 break;
-/*            case R.id.btn_show_password:
-                mBtnShowPassword.setP*/
         }
     }
 }

@@ -9,11 +9,13 @@ import com.example.presencecontroltestapp.ui.fragments.FragmentHome;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.containerMain, FragmentHome.class, null).commit();
