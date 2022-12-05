@@ -69,5 +69,10 @@
 
     <!-- Fragment Profile  -->
     <string name="profile">Profile</string>
+    <string name="btn_change_password">Change Password</string>
+    <string name="btn_delete_account">Delete Account</string>
+    <string name="delete_user_successfully">Delete Successfully</string>
+    <string name="delete_user_failed">Delete Failed</string>
+    <string name="profile_control_thread">Profile Thread</string>
 
 </resources>

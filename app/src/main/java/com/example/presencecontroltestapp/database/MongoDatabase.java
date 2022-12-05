@@ -1,7 +1,6 @@
 package com.example.presencecontroltestapp.database;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.presencecontroltestapp.R;
@@ -88,7 +87,6 @@ public class MongoDatabase  {
                 students.getCredentialsPassword()).append(
                 Constants.credentialRa, students.getCredentialsRa()).append(Constants.email,
                 students.getEmail()).append(Constants.name, students.getName())).getAsync(result1 -> {
-                Log.d(TAG, "<---Higa---> insert successful : " + result1.isSuccess());
             Toast.makeText(mContext, result1.isSuccess() ? mContext.getString(
                     R.string.user_successfully_created) :
                     mContext.getString(
@@ -107,14 +105,13 @@ public class MongoDatabase  {
         });
     }
 
-    private synchronized void delete() {
-        Document queryFilter = new Document(Constants.credentialRa, "mateus");
+    public synchronized void delete(Integer ra) {
+        Document queryFilter = new Document(Constants.credentialRa, ra);
         mMongoCollection.deleteOne(queryFilter).getAsync(task -> {
-            if (task.isSuccess()) {
-                Log.d(TAG, "<---Higa---> delete success");
-            } else {
-                Log.d(TAG, "<---Higa---> delete failed  : " + task.getError());
-            }
+            Toast.makeText(mContext, task.isSuccess() ? mContext.getString(
+                    R.string.delete_user_successfully) :
+                    mContext.getString(
+                            R.string.delete_user_failed), Toast.LENGTH_SHORT).show();
         });
     }
 
