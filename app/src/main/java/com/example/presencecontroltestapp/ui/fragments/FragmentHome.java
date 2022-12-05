@@ -3,6 +3,7 @@ package com.example.presencecontroltestapp.ui.fragments;
 import android.Manifest;
 import android.os.Build;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,21 +14,30 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.presencecontroltestapp.R;
 import com.example.presencecontroltestapp.database.MongoDatabase;
 import com.example.presencecontroltestapp.databinding.FragmentHomeBinding;
+import com.example.presencecontroltestapp.entities.Students;
+import com.example.presencecontroltestapp.provider.IDatabaseResult;
 
-public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
+public class FragmentHome extends BaseFragment<FragmentHomeBinding>  implements IDatabaseResult {
     public static final String TAG = FragmentHome.class.getSimpleName();
 
     private static final int DOUBLE_PRESS_INTERVAL = 2000;
-
     private boolean mDoubleBackPressed = false;
     private OnBackPressedCallback mDefaultBackPressedCallback;
     private ActivityResultLauncher<String[]> mPermissionRequest;
-    private MongoDatabase mMongoDatabase;
+    private static Handler mHandler;
 
+    private FragmentRecoveryPassword mFragmentRecovery;
+    private FragmentCreateAccount mFragmentCreateAccount;
+
+    private MongoDatabase mMongoDatabase;
+    private boolean isMongoDBConnected = false;
+
+    private String stringRa, stringPassword;
     private EditText mEtLogin;
     private EditText mEtPassword;
 
@@ -35,25 +45,32 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
 
     @Override
     public void onBindCreated(FragmentHomeBinding binding) {
-        mEtLogin =  binding.textRa;
-        mEtPassword = binding.textPassword;
+        mEtLogin =  binding.edRa;
+        mEtPassword = binding.edPassword;
+        mHandler = getHandler();
 
-        binding.btnLogin.setOnClickListener(v -> onClick(binding.btnLogin));
-        binding.btnCleanEdit.setOnClickListener(v -> cleanEtFields());
-        binding.btnForgotPassword.setOnClickListener(v -> onClick(binding.btnForgotPassword));
-        binding.btnNotUser.setOnClickListener(v -> onClick(binding.btnForgotPassword));
+        binding.tvLogin.setOnClickListener(v -> onClick(binding.tvLogin));
+        binding.tvCleanFields.setOnClickListener(v -> cleanEtFields());
+        binding.tvForgotPassword.setOnClickListener(v -> onClick(binding.tvForgotPassword));
+        binding.tvCreateAccount.setOnClickListener(v -> onClick(binding.tvCreateAccount));
 
         //add permissions here
         String[] permissionsToRequest = new String[]{
                 Manifest.permission.CAMERA
         };
 
-        mMongoDatabase = new MongoDatabase(requireContext(), "data",
-                "dede");
+        mMongoDatabase = new MongoDatabase(requireContext(), this);
+        mMongoDatabase.connectToMongoDB();
 
         mDefaultBackPressedCallback = getDefaultOnBackPressed();
         setBackPressedCallback(mDefaultBackPressedCallback);
         getPermissions(permissionsToRequest);
+    }
+
+    private Handler getHandler() {
+        HandlerThread handlerThread = new HandlerThread(getString(R.string.presence_control_thread));
+        handlerThread.start();
+        return new Handler(handlerThread.getLooper());
     }
 
     private boolean sdkCheck() {
@@ -77,6 +94,27 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
         mPermissionRequest.launch(permissions);
     }
 
+    private boolean checkCredentials() {
+        boolean valid = false;
+        stringRa = mEtLogin.getText().toString();
+        stringPassword = mEtPassword.getText().toString();
+
+        if (!isMongoDBConnected) return false;
+        if (TextUtils.isEmpty(stringRa) || TextUtils.isEmpty(stringPassword)) {
+            Toast.makeText(getActivity(), R.string.empty_fields, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (stringRa.length() > 8) {
+            Toast.makeText(getActivity(), getString(R.string.ra_size_wrong), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (isValid(stringRa)) {
+            valid = true;
+        }
+        return valid;
+    }
+
     private boolean isValid(String value) {
         if (TextUtils.isEmpty(value)) return false;
 
@@ -86,21 +124,6 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
             valid = true;
         } catch (NumberFormatException e) {
             Log.e(TAG, "Failed to parse integer - " + e.getLocalizedMessage());
-        }
-        return valid;
-    }
-
-    private boolean checkCredentials() {
-        if (mMongoDatabase.connectToMongoDB("de", "dede")) return false;
-        String login = mEtLogin.getText().toString();
-        String password = mEtLogin.getText().toString();
-
-        if (TextUtils.isEmpty(login) || TextUtils.isEmpty(password) || login == null
-        || password == null) return false;
-
-        boolean valid = false;
-        if (isValid(login) && isValid(password)) {
-            valid = true;
         }
         return valid;
     }
@@ -133,18 +156,61 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding> {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnLogin:
-                if (checkCredentials()) {
-                    cleanEtFields();
-                    changeFragment(FragmentRoutineDetails.class);
-                }
+            case R.id.tv_login:
+                if (checkCredentials())
+                    mMongoDatabase.select(convertToInteger(stringRa), stringPassword);
                 break;
-            case R.id.btnForgotPassword:
-                changeFragment(FragmentRecoveryPassword.class);
+            case R.id.tv_forgot_password:
+                mHandler.postDelayed(this::inflateFragmentRecoveryPassword, 1500);
                 break;
-            case R.id.btnNotUser:
-                changeFragment(FragmentNotUser.class);
+            case R.id.tv_create_account:
+                mHandler.postDelayed(this::inflateFragmentCreateAccount, 1500);
                 break;
         }
+    }
+
+    private void inflateFragmentRecoveryPassword() {
+        mFragmentRecovery = FragmentRecoveryPassword.newInstance(requireContext() ,mMongoDatabase,
+                isMongoDBConnected);
+        FragmentManager fm = getParentFragmentManager();
+        fm.beginTransaction().add(R.id.fragment_home, mFragmentRecovery, null)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void inflateFragmentCreateAccount() {
+        mFragmentCreateAccount = FragmentCreateAccount.newInstance(requireContext(), mMongoDatabase,
+                isMongoDBConnected);
+        FragmentManager fm = getParentFragmentManager();
+        fm.beginTransaction().add(R.id.fragment_home, mFragmentCreateAccount, null)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onConnectionResponse(boolean result) {
+        Log.d(TAG, "<---Higa---> connected to Database : " + result);
+        isMongoDBConnected = result;
+    }
+
+    @Override
+    public void onSelectResponse(boolean result) {
+
+    }
+
+    @Override
+    public void onSelectResponse(boolean result, Students students) {
+        if (result) {
+            FragmentRoutineDetails.newInstance(requireContext(), mMongoDatabase, students,
+                    isMongoDBConnected);
+            changeFragment(FragmentRoutineDetails.class);
+        }
+        else {
+            Toast.makeText(requireContext(), getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static int convertToInteger(String value) {
+        return Integer.parseInt(value);
     }
 }

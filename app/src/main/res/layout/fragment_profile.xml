@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_profile"
     android:background="@drawable/login_screen">
-
     <View
         android:id="@+id/header"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,17 +19,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header">
 
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:background="@drawable/ic_btn_back"
+            android:rotation="90"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="40dp"/>
+
         <TextView
             android:id="@+id/tv_create_account"
             android:layout_width="247dp"
             android:layout_height="36dp"
-            android:text="@string/create_account"
+            android:text="@string/profile"
             android:textColor="#010101"
             android:textSize="21sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="35dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="56dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,40 +82,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/settings_field"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
-
-        <TextView
-            android:id="@+id/tv_password"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:textColor="@color/black"
-            android:textFontWeight="400"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/tv_password" />
-
-        <EditText
-            android:id="@+id/ed_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/hint_password"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_password"
-            android:textColor="@color/edit_text_color"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -109,7 +89,7 @@
         android:background="@drawable/settings_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
         <TextView
             android:id="@+id/tv_name"
@@ -167,38 +147,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_email"
             android:textColor="@color/edit_text_color"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="35dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
-
-        <Button
-            android:id="@+id/btnCreateAccount"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:text="@string/btn_create_user"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="35dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <Button
-            android:id="@+id/btnCleanFields"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:text="@string/btn_clean_fields"
-            android:layout_marginTop="35dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="15dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/btnCreateAccount"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

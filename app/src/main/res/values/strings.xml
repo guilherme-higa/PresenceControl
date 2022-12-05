@@ -5,28 +5,65 @@
     <!-- APP Name -->
     <string name="app_name">Presence Control</string>
 
+    <!-- Message -->
+    <string name="empty_fields">Empty Fields</string>
+
     <!-- Fragment Home -->
-    <string name="btn_login">Login</string>
+    <string name="tv_login">Login</string>
+    <string name="tv_clean_fields">Clean Fields</string>
     <string name="tv_app_title">Presence Control</string>
-    <string name="btn_forgot_password">Forgot Password</string>
-    <string name="btn_not_user_yet">Create account</string>
+    <string name="tv_welcome_user">Bem-vindo</string>
+    <string name="tv_forgot_password">Forgot Password</string>
+    <string name="tv_create_account">Create account</string>
     <string name="btn_clean_edit">Clean Fields</string>
-    <string name="edit_ra_login">RA</string>
-    <string name="edit_password_login">PASSWORD</string>
-    <string name="empty"></string>
+    <string name="hint_ra">20016598</string>
+    <string name="tv_ra">RA</string>
+    <string name="tv_welcome">WELCOME</string>
+    <string name="tv_password">Password</string>
+    <string name="user_not_found">Usuário não encontrado</string>
+    <string name="ra_size_wrong">Verifique o tamanho do RA digitado</string>
+    <string name="presence_control_thread">Presence Control Thread</string>
+
+    <!-- Fragment Create account-->
+    <string name="create_account">Create Account</string>
+    <string name="btn_create_user">Create User</string>
+    <string name="btn_clean_fields">Clean fields</string>
+    <string name="tv_name">Nome</string>
+    <string name="tv_email">Email</string>
+    <string name="hint_password">senha1234</string>
+    <string name="hint_name">Bruno Marini</string>
+    <string name="hint_email">gmail.com</string>
+    <string name="user_found">Usuário encontrado</string>
+    <string name="user_successfully_created">Usuário criado com sucesso</string>
+    <string name="user_failed_created">Usuário não foi criado</string>
+
+    <!-- Fragment Forgot Password -->
+    <string name="confirm">CONFIRM</string>
+    <string name="password_updated_successful">Senha atualizada com sucesso</string>
+    <string name="password_updated_failed">Senha não pode ser atualizada</string>
+    <string name="no_connection_with_db">Sem Conexão com Banco de Dados</string>
+    <string name="user_already_added_to_db">RA vinculado com usuário, favor verificar RA digitado</string>
+
+    <string name="edit_password_login">Senha1234</string>
     <string name="warning_pres_back_again">Please click BACK again to exit</string>
     <string name="tlc_numeric">0123456789</string>
 
     <!-- Fragment Routine Details -->
     <string name="routine_details">Routine Details</string>
     <string name="tv_student_name">Nome do aluno</string>
+
     <!-- Menu Options -->
     <string name="menu_qrcode">QRcode</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_edit">About App</string>
 
     <!-- Fragment About App -->
     <string name="tv_about_title">Presence Control App</string>
     <string name="tv_version_number">Version %s</string>
     <string name="tv_latest_installed">The latest version is already installed</string>
+    <string name="empty"> </string>
+
+    <!-- Fragment Profile  -->
+    <string name="profile">Profile</string>
 
 </resources>

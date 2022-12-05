@@ -1,22 +1,18 @@
 package com.example.presencecontroltestapp.entities;
 
-import org.bson.types.ObjectId;
-
 public class Students {
     private static final String TAG = Students.class.getSimpleName();
 
-    private ObjectId id;
     private String name;
     private String email;
     private int credentialsRa;
-    private int credentialsPassword;
+    private String credentialsPassword;
 
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
+    public Students(String name, String email, int credentialsRa, String credentialsPassword) {
+        this.name = name;
+        this.email = email;
+        this.credentialsRa = credentialsRa;
+        this.credentialsPassword = credentialsPassword;
     }
 
     public String getName() {
@@ -43,11 +39,11 @@ public class Students {
         this.credentialsRa = credentialsRa;
     }
 
-    public int getCredentialsPassword() {
+    public String  getCredentialsPassword() {
         return credentialsPassword;
     }
 
-    public void setCredentialsPassword(int credentialsPassword) {
+    public void setCredentialsPassword(String credentialsPassword) {
         this.credentialsPassword = credentialsPassword;
     }
 }

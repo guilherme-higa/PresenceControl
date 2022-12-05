@@ -13,20 +13,40 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 
 import com.example.presencecontroltestapp.R;
+import com.example.presencecontroltestapp.database.MongoDatabase;
 import com.example.presencecontroltestapp.databinding.FragmentRoutineDetailsBinding;
+import com.example.presencecontroltestapp.entities.Students;
 
 public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsBinding>
         implements PopupMenu.OnMenuItemClickListener, View.OnClickListener {
+
     public static final String TAG = FragmentRoutineDetails.class.getSimpleName();
 
     private static final int DOUBLE_PRESS_INTERVAL = 2000;
 
     private boolean mDoubleBackPressed = false;
+    private static Context mContext;
+    private static Students mStudents;
+    private static MongoDatabase mMongoDatabase;
+    private static boolean isConnected = false;
+
     private OnBackPressedCallback mDefaultBackPressedCallback;
+
     public FragmentRoutineDetails() { super(R.layout.fragment_routine_details, FragmentRoutineDetailsBinding::bind); }
+
+    public static FragmentRoutineDetails newInstance(Context context, MongoDatabase mongoDatabase, Students students,
+                                                     boolean connected) {
+        mContext = context;
+        mMongoDatabase = mongoDatabase;
+        isConnected = connected;
+        mStudents = students;
+        return new FragmentRoutineDetails();
+    }
 
     @Override
     public void onBindCreated(FragmentRoutineDetailsBinding binding) {
+        binding.tvUserName.setText(mStudents.getName());
+
         binding.btnMenu.setOnClickListener(v -> showPopupMenu(v));
         mDefaultBackPressedCallback = getDefaultOnBackPressed();
         setBackPressedCallback(mDefaultBackPressedCallback);
@@ -51,6 +71,11 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
                 return true;
             case R.id.menu_aboutApp:
                 changeFragment(FragmentAboutApp.class);
+                return true;
+            case R.id.menu_profile:
+                FragmentProfile.newInstance(mContext, mMongoDatabase, mStudents);
+                changeFragment(FragmentProfile.class);
+                return true;
             default:
                 return false;
         }
