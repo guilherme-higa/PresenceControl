@@ -1,6 +1,8 @@
 package com.example.presencecontroltestapp.ui.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,9 +22,11 @@ public class FragmentQRCode extends BaseFragment<FragmentQrcodeBinding> {
     private static boolean isConnected = false;
 
     public FragmentQRCode() { super(R.layout.fragment_qrcode, FragmentQrcodeBinding::bind); }
+
     @Override
     public void onBindCreated(FragmentQrcodeBinding binding) {
         binding.btnBack.setOnClickListener(v -> popBackStack());
+        binding.btnQRCode.setOnClickListener(v -> onClick(binding.btnQRCode));
         setBackPressedCallback();
     }
 
@@ -32,6 +36,21 @@ public class FragmentQRCode extends BaseFragment<FragmentQrcodeBinding> {
         mMongoDatabase = mongoDatabase;
         isConnected = connected;
         return new FragmentQRCode();
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnQRCode:
+                openCamera();
+                break;
+            case R.id.btnCode:
+                break;
+        }
+    }
+
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivity(intent);
     }
 
     protected void popBackStack() {

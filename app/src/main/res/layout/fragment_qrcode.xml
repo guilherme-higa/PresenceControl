@@ -33,4 +33,39 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginTop="40dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_header_about"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <Button
+            android:id="@+id/btnQRCode"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="@string/qrcode"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/btnCode"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="@string/code"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnQRCode"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,9 +53,13 @@
     <string name="tv_student_name">Nome do aluno</string>
 
     <!-- Menu Options -->
-    <string name="menu_qrcode">QRcode</string>
+    <string name="presence_validation">Validar Presença</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_edit">About App</string>
+
+    <!-- Fragment QRCode -->
+    <string name="qrcode">QRCODE</string>
+    <string name="code">CODIGO</string>
 
     <!-- Fragment About App -->
     <string name="tv_about_title">Presence Control App</string>

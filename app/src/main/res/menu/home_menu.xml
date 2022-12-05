@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_qrcode"
-        android:title="@string/menu_qrcode"/>
+        android:title="@string/presence_validation"/>
     <item
         android:id="@+id/menu_profile"
         android:title="@string/menu_profile"/>
