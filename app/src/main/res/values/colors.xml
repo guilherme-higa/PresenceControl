@@ -15,4 +15,7 @@
     <color name="black_text">#010101</color>
     <color name="grey_text">#8C8C8C</color>
     <color name="edit_text_color">#010101</color>
+    <color name="white_warning_text">#FCFCFC</color>
+    <color name="yellow">#F9DB22</color>
+    <color name="dark_grey_text">#4D4D4D</color>
 </resources>

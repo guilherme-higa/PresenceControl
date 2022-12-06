@@ -1,21 +1,28 @@
 package com.example.presencecontroltestapp.database;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.presencecontroltestapp.R;
 import com.example.presencecontroltestapp.entities.Students;
 import com.example.presencecontroltestapp.provider.IDatabaseResult;
+import com.example.presencecontroltestapp.ui.fragments.ClassInformation;
 import com.example.presencecontroltestapp.utils.Constants;
 
 import org.bson.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
+import io.realm.mongodb.RealmResultTask;
 import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class MongoDatabase  {
     private static final String TAG = MongoDatabase.class.getSimpleName();
@@ -23,6 +30,7 @@ public class MongoDatabase  {
     private IDatabaseResult mCallBack;
     private io.realm.mongodb.mongo.MongoDatabase mMongoDatabase;
     private MongoCollection<Document> mMongoCollection;
+    private MongoCollection<Document> mMongoCollectionForClass;
     private MongoClient mMongoClient;
     private App mApp;
     private User mUser;
@@ -35,6 +43,7 @@ public class MongoDatabase  {
             mMongoClient = mUser.getMongoClient(Constants.serviceName);
             mMongoDatabase= mMongoClient.getDatabase(Constants.databaseName);
             mMongoCollection = mMongoDatabase.getCollection(Constants.mCollectionName);
+            mMongoCollectionForClass = mMongoDatabase.getCollection(Constants.mClassInformationCollection);
     }
 
     public void connectToMongoDB() {
@@ -65,6 +74,47 @@ public class MongoDatabase  {
             }
         });
     }
+
+    public synchronized void selectClassInformation(IDatabaseResult.informationClass callback ,int ra) {
+        Document queryFilter = new Document().append(Constants.credentialRa, ra);
+        RealmResultTask<MongoCursor<Document>> findTask = mMongoCollectionForClass.find(queryFilter).iterator();
+        findTask.getAsync(result -> {
+            if (result.isSuccess()) {
+                MongoCursor<Document> results = result.get();
+                List<ClassInformation> list = new ArrayList<>();
+                while (results.hasNext()) {
+                    Document currentDocument = results.next();
+                    Log.d(TAG, "<---Higa---> currentDocument : " + currentDocument);
+                    ClassInformation classInformation = new ClassInformation(String.valueOf(currentDocument.get(Constants.name)),
+                            String.valueOf(currentDocument.get(Constants.professorName)),
+                            Integer.parseInt(String.valueOf(currentDocument.get(Constants.qtdAulasDadas))),
+                            Integer.parseInt(String.valueOf(currentDocument.get(Constants.qtdAulasAssistidas))));
+                    list.add(classInformation);
+                    callback.onClassInformationSelect(true, list);
+                }
+            }else {
+                callback.onClassInformationSelect(false);
+            }
+        });
+    }
+
+//    public synchronized void selectClassInformation(IDatabaseResult.informationClass callback ,int ra) {
+//        Document queryFilter = new Document().append(Constants.credentialRa, ra);
+//        mMongoCollectionForClass.findOne(queryFilter).getAsync(result -> {
+//            Document document = result.get();
+//            if (result.isSuccess() && document != null) {
+//                ClassInformation classInformation = new ClassInformation(String.valueOf(document.get(Constants.name)),
+//                        String.valueOf(document.get(Constants.professorName)),
+//                        Integer.parseInt(String.valueOf(document.get(Constants.qtdAulasDadas))),
+//                        Integer.parseInt(String.valueOf(document.get(Constants.qtdAulasAssistidas))));
+//                List<ClassInformation> list = new ArrayList<>();
+//                list.add(classInformation);
+//                callback.onClassInformationSelect(true, list);
+//            } else {
+//                callback.onClassInformationSelect(false);
+//            }
+//        });
+//    }
 
     public synchronized void selectRecovery(IDatabaseResult.Recovery callback, int ra, String email) {
         Document queryFilter = new Document().append(Constants.credentialRa, ra).append(Constants.email, email);

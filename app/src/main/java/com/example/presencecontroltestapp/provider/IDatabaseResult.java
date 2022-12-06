@@ -1,6 +1,9 @@
 package com.example.presencecontroltestapp.provider;
 
 import com.example.presencecontroltestapp.entities.Students;
+import com.example.presencecontroltestapp.ui.fragments.ClassInformation;
+
+import java.util.List;
 
 public interface IDatabaseResult {
         void onConnectionResponse(boolean result);
@@ -13,6 +16,11 @@ public interface IDatabaseResult {
 
     interface Recovery {
         void onRecoverySelect(boolean result);
+    }
+
+    interface informationClass {
+        void onClassInformationSelect(boolean result, List<ClassInformation> classInformation);
+        void onClassInformationSelect(boolean result);
     }
 
     interface CreateAccount {

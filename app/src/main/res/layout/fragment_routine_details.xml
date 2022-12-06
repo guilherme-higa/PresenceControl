@@ -84,16 +84,55 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <LinearLayout
+        android:id="@+id/cl_cl_no_item"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:backgroundTint="@color/grey_settings"
-        android:theme="@style/SCBSwitch"
-        android:background="@drawable/settings_field"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_no_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_no_class_selected"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="400"
+            android:textSize="17sp"
+            android:lineHeight="20dp"
+            android:textColor="@color/dark_grey_text"/>
+        <TextView
+            android:id="@+id/tv_open_imdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_contact_admin"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="400"
+            android:textSize="13sp"
+            android:lineHeight="17dp"
+            android:gravity="top|center"
+            android:textColor="@color/grey_text"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_imdfs"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

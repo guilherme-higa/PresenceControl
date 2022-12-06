@@ -162,9 +162,11 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding>  implements 
                 break;
             case R.id.tv_forgot_password:
                 mHandler.postDelayed(this::inflateFragmentRecoveryPassword, 1500);
+                cleanEtFields();
                 break;
             case R.id.tv_create_account:
                 mHandler.postDelayed(this::inflateFragmentCreateAccount, 1500);
+                cleanEtFields();
                 break;
         }
     }
@@ -202,7 +204,7 @@ public class FragmentHome extends BaseFragment<FragmentHomeBinding>  implements 
     public void onSelectResponse(boolean result, Students students) {
         if (result) {
             FragmentRoutineDetails.newInstance(requireContext(), mMongoDatabase, students,
-                    isMongoDBConnected);
+                    isMongoDBConnected, FragmentHome.this);
             changeFragment(FragmentRoutineDetails.class);
         }
         else {

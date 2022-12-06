@@ -23,6 +23,7 @@
     <string name="user_not_found">Usuário não encontrado</string>
     <string name="ra_size_wrong">Verifique o tamanho do RA digitado</string>
     <string name="presence_control_thread">Presence Control Thread</string>
+    <string name="fragment_routine_thread">Fragment Routine Thread</string>
 
     <!-- Fragment Create account-->
     <string name="create_account">Create Account</string>
@@ -51,6 +52,8 @@
     <!-- Fragment Routine Details -->
     <string name="routine_details">Routine Details</string>
     <string name="tv_student_name">Nome do aluno</string>
+    <string name="tv_no_class_selected">No Class identify for this student</string>
+    <string name="tv_contact_admin">Contact your admin</string>
 
     <!-- Menu Options -->
     <string name="presence_validation">Validar Presença</string>
