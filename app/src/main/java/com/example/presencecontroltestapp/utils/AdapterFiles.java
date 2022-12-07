@@ -1,7 +1,6 @@
 package com.example.presencecontroltestapp.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ public class AdapterFiles extends RecyclerView.Adapter<AdapterFiles.FilesViewHol
     private Students mStudents;
 
     public AdapterFiles (List<ClassInformation> fileList) {
-        Log.d(TAG, "<---Higa---> fileList.size : " + fileList.size());
         mFilesList = fileList;
     }
 

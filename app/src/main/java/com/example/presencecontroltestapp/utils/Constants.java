@@ -17,6 +17,14 @@ public class Constants {
     public static final String professorName = "professorName";
     public static final String qtdAulasDadas = "qtdAulasDadas";
     public static final String qtdAulasAssistidas = "qtdAulasAssistidas";
+    public static final String diaDaSemana = "diaDaSemana";
+    public static final String defaultDate = "segunda-feira";
+    public static final String terca = "terça-feira";
+    public static final String quarta = "quarta-feira";
+    public static final String quinta = "quinta-feira";
+    public static final String sexta = "sexta-feira";
+    public static final String sabado = "sabado-feira";
+    public static final String domingo = "domingo-feira";
 
     //Database Students Collection
     public static final String credentialPassword = "credentialsPassword";

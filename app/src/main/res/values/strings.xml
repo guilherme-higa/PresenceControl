@@ -52,7 +52,7 @@
     <!-- Fragment Routine Details -->
     <string name="routine_details">Routine Details</string>
     <string name="tv_student_name">Nome do aluno</string>
-    <string name="tv_no_class_selected">No Class identify for this student</string>
+    <string name="tv_no_class_selected">No Class identify for this day</string>
     <string name="tv_contact_admin">Contact your admin</string>
 
     <!-- Menu Options -->

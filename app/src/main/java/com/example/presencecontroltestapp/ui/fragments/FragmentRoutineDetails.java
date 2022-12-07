@@ -1,6 +1,7 @@
 package com.example.presencecontroltestapp.ui.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -8,12 +9,11 @@ import android.view.ContextThemeWrapper;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.presencecontroltestapp.R;
 import com.example.presencecontroltestapp.database.MongoDatabase;
@@ -21,6 +21,7 @@ import com.example.presencecontroltestapp.databinding.FragmentRoutineDetailsBind
 import com.example.presencecontroltestapp.entities.Students;
 import com.example.presencecontroltestapp.provider.IDatabaseResult;
 import com.example.presencecontroltestapp.utils.AdapterFiles;
+import com.example.presencecontroltestapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,7 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
     private List<ClassInformation> mClassInformation = new ArrayList<>();
     private static FragmentHome mFragmentHome;
     private Handler mHandler;
-    private RecyclerView mView;
-    private LinearLayout mLinear;
+    private TextView segunda, terca, quarta, quinta, sexta, sabado, domingo;
 
     private OnBackPressedCallback mDefaultBackPressedCallback;
 
@@ -60,13 +60,26 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
     @Override
     public void onBindCreated(FragmentRoutineDetailsBinding binding) {
         binding.tvUserName.setText(mStudents.getName());
+        segunda = binding.segunda;
+        terca = binding.terca;
+        quarta = binding.quarta;
+        quinta = binding.quinta;
+        sexta = binding.sexta;
+        sabado = binding.sabado;
+        domingo = binding.domingo;
 
         mHandler = getHandler();
-        mView = binding.rvImdfs;
-        mLinear = binding.clClNoItem;
+        mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.defaultDate);
 
-        mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa());
-        binding.btnMenu.setOnClickListener(v -> showPopupMenu(v));
+        binding.btnMenu.setOnClickListener(this::showPopupMenu);
+        binding.segunda.setOnClickListener(v -> onClick(binding.segunda));
+        binding.terca.setOnClickListener(v -> onClick(binding.terca));
+        binding.quarta.setOnClickListener(v -> onClick(binding.quarta));
+        binding.quinta.setOnClickListener(v -> onClick(binding.quinta));
+        binding.sexta.setOnClickListener(v -> onClick(binding.sexta));
+        binding.sabado.setOnClickListener(v -> onClick(binding.sabado));
+        binding.domingo.setOnClickListener(v -> onClick(binding.domingo));
+
         mDefaultBackPressedCallback = getDefaultOnBackPressed();
         setBackPressedCallback(mDefaultBackPressedCallback);
 
@@ -75,6 +88,77 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
                 populateFilesList();
             });
         }, 2000);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.segunda:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.defaultDate);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+            case R.id.terca:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.terca);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+            case R.id.quarta:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.quarta);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+            case R.id.quinta:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.quinta);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+            case R.id.sexta:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.sexta);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+            case R.id.sabado:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.sabado);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+            case R.id.domingo:
+                mMongoDatabase.selectClassInformation(this, mStudents.getCredentialsRa(), Constants.domingo);
+                mHandler.postDelayed(() -> {
+                    mFragmentHome.getActivity().runOnUiThread(() -> {
+                        populateFilesList();
+                    });
+                }, 1500);
+                break;
+        }
+    }
+
+    private void switchTextViewColor(TextView textView){
+        if (textView.getCurrentTextColor() == -16711423 || textView.getCurrentTextColor() == Color.BLACK) {
+            textView.setTextColor(Color.RED);
+        } else {
+            textView.setTextColor(Color.BLACK);
+        }
     }
 
     private Handler getHandler() {
@@ -132,10 +216,6 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
         requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
 
     @Override
     public void onClassInformationSelect(boolean result, List<ClassInformation> classInformation) {
@@ -150,11 +230,15 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
                 getBinding().rvImdfs.setAdapter(adapterFiles);
                 getBinding().rvImdfs.setVisibility(View.VISIBLE);
                 getBinding().clClNoItem.setVisibility(View.GONE);
+            } else {
+                getBinding().rvImdfs.setVisibility(View.GONE);
+                getBinding().clClNoItem.setVisibility(View.VISIBLE);
             }
         } else {
             Toast.makeText(requireActivity(), getString(R.string.warning_pres_back_again),
                     Toast.LENGTH_SHORT).show();
         }
+        mClassInformation = new ArrayList<>();
     }
 
     @Override

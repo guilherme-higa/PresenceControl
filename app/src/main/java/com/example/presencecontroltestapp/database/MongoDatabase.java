@@ -75,23 +75,24 @@ public class MongoDatabase  {
         });
     }
 
-    public synchronized void selectClassInformation(IDatabaseResult.informationClass callback ,int ra) {
-        Document queryFilter = new Document().append(Constants.credentialRa, ra);
+    public synchronized void selectClassInformation(IDatabaseResult.informationClass callback ,int ra, String dia) {
+        Document queryFilter = new Document().append(Constants.credentialRa, ra).append(Constants.diaDaSemana, dia);
         RealmResultTask<MongoCursor<Document>> findTask = mMongoCollectionForClass.find(queryFilter).iterator();
         findTask.getAsync(result -> {
             if (result.isSuccess()) {
                 MongoCursor<Document> results = result.get();
                 List<ClassInformation> list = new ArrayList<>();
+                ClassInformation classInformation;
                 while (results.hasNext()) {
                     Document currentDocument = results.next();
-                    Log.d(TAG, "<---Higa---> currentDocument : " + currentDocument);
-                    ClassInformation classInformation = new ClassInformation(String.valueOf(currentDocument.get(Constants.name)),
+                    classInformation = new ClassInformation(String.valueOf(currentDocument.get(Constants.name)),
                             String.valueOf(currentDocument.get(Constants.professorName)),
                             Integer.parseInt(String.valueOf(currentDocument.get(Constants.qtdAulasDadas))),
-                            Integer.parseInt(String.valueOf(currentDocument.get(Constants.qtdAulasAssistidas))));
+                            Integer.parseInt(String.valueOf(currentDocument.get(Constants.qtdAulasAssistidas))),
+                            String.valueOf(currentDocument.get(Constants.diaDaSemana)));
                     list.add(classInformation);
-                    callback.onClassInformationSelect(true, list);
                 }
+                callback.onClassInformationSelect(true, list);
             }else {
                 callback.onClassInformationSelect(false);
             }
