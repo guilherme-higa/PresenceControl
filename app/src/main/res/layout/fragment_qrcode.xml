@@ -50,7 +50,7 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/qrcode"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="35dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,11 +61,137 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/code"
-            android:layout_marginStart="120dp"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="35dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintLeft_toRightOf="@+id/btnQRCode"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:background="@drawable/settings_field"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_header_about"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
+
+        <TextView
+            android:id="@+id/tv_ra"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnQRCode"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/code" />
+
+        <EditText
+            android:id="@+id/ed_codigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_ra"
+            android:digits="@string/tlc_numeric"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ra"
+            android:textColor="@color/edit_text_color"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:background="@drawable/settings_field"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
+
+        <TextView
+            android:id="@+id/tv_materia"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/class_name" />
+
+        <EditText
+            android:id="@+id/ed_materia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:hint="@string/hint_materia"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_materia"
+            android:textColor="@color/edit_text_color"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:background="@drawable/settings_field"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
+
+        <TextView
+            android:id="@+id/tv_diaMateria"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/class_name" />
+
+        <EditText
+            android:id="@+id/ed_diaMateria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:hint="@string/hint_dia_semana"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_diaMateria"
+            android:textColor="@color/edit_text_color"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnConfirma"
+        android:layout_width="150dp"
+        android:visibility="gone"
+        android:layout_height="70dp"
+        android:text="@string/confirm_presence"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="105dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

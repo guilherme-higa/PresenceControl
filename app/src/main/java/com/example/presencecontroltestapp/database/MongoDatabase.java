@@ -75,6 +75,25 @@ public class MongoDatabase  {
         });
     }
 
+
+    public synchronized void selectFrequency(IDatabaseResult.RecoveryFrequency callback, int ra, String materia, String data) {
+        Document queryFilter = new Document().append(Constants.credentialRa, ra).append(
+                Constants.name, materia).append(Constants.diaDaSemana, data);
+        mMongoCollectionForClass.findOne(queryFilter).getAsync(result -> {
+            Document document = result.get();
+            if (result.isSuccess() && document != null) {
+                ClassInformation classInformation = new ClassInformation(String.valueOf(document.get(Constants.name)),
+                        String.valueOf(document.get(Constants.professorName)),
+                        Integer.parseInt(String.valueOf(document.get(Constants.qtdAulasDadas))),
+                        Integer.parseInt(String.valueOf(document.get(Constants.qtdAulasAssistidas))),
+                        String.valueOf(document.get(Constants.diaDaSemana)));
+                callback.onRecoveryFrequency(true, classInformation);
+            } else {
+                callback.onRecoveryFrequency(false);
+            }
+        });
+    }
+
     public synchronized void selectClassInformation(IDatabaseResult.informationClass callback ,int ra, String dia) {
         Document queryFilter = new Document().append(Constants.credentialRa, ra).append(Constants.diaDaSemana, dia);
         RealmResultTask<MongoCursor<Document>> findTask = mMongoCollectionForClass.find(queryFilter).iterator();
@@ -95,6 +114,20 @@ public class MongoDatabase  {
                 callback.onClassInformationSelect(true, list);
             }else {
                 callback.onClassInformationSelect(false);
+            }
+        });
+    }
+
+
+    public synchronized void findAndUpdateFrequency(int ra, String dia, String materia, int newFrequency, int newClassNumber) {
+        Document queryFilter = new Document().append(Constants.credentialRa, ra).append(Constants.diaDaSemana, dia).append(Constants.name, materia);
+        Document updateDocument = new Document("$set", new Document(Constants.qtdAulasAssistidas, newFrequency).append(Constants.qtdAulasDadas, newClassNumber));
+        mMongoCollectionForClass.findOneAndUpdate(queryFilter, updateDocument).getAsync(result -> {
+            Document document = result.get();
+            if (result.isSuccess() && document != null) {
+                Toast.makeText(mContext, mContext.getString(R.string.frequency_updated), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(mContext, mContext.getString(R.string.frequency_update_failed), Toast.LENGTH_SHORT).show();
             }
         });
     }

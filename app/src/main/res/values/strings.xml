@@ -3,15 +3,15 @@
     <string name="first_fragment_label">activity_main</string>
     <string name="second_fragment_label">fragment_home</string>
     <!-- APP Name -->
-    <string name="app_name">Presence Control</string>
+    <string name="app_name">Class Presence</string>
 
     <!-- Message -->
     <string name="empty_fields">Empty Fields</string>
 
     <!-- Fragment Home -->
-    <string name="tv_login">Login</string>
+    <string name="tv_login">Login into app</string>
     <string name="tv_clean_fields">Clean Fields</string>
-    <string name="tv_app_title">Presence Control</string>
+    <string name="tv_app_title">Class Presence</string>
     <string name="tv_welcome_user">Bem-vindo</string>
     <string name="tv_forgot_password">Forgot Password</string>
     <string name="tv_create_account">Create account</string>
@@ -63,6 +63,14 @@
     <!-- Fragment QRCode -->
     <string name="qrcode">QRCODE</string>
     <string name="code">CODIGO</string>
+    <string name="class_name">Nome Da materia</string>
+    <string name="code_thread">Code Thread</string>
+    <string name="hint_materia">Projeto Integrado</string>
+    <string name="hint_dia_semana">Segunda-feira</string>
+    <string name="frequency_updated">Frequencia atualizada com sucesso</string>
+    <string name="frequency_update_failed">Não foi possivel atualizar a preseça</string>
+    <string name="invalid_code">Invalid Code, please try again</string>
+    <string name="confirm_presence">VALIDAR PRESENÇA</string>
 
     <!-- Fragment About App -->
     <string name="tv_about_title">Presence Control App</string>

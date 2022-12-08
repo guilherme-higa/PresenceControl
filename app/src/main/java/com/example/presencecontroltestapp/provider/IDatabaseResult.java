@@ -18,6 +18,11 @@ public interface IDatabaseResult {
         void onRecoverySelect(boolean result);
     }
 
+    interface RecoveryFrequency {
+        void onRecoveryFrequency(boolean result, ClassInformation classInformation);
+        void onRecoveryFrequency(boolean result);
+    }
+
     interface informationClass {
         void onClassInformationSelect(boolean result, List<ClassInformation> classInformation);
         void onClassInformationSelect(boolean result);

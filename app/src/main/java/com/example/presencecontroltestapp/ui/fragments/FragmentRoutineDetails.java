@@ -182,6 +182,7 @@ public class FragmentRoutineDetails extends BaseFragment<FragmentRoutineDetailsB
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_qrcode:
+                FragmentQRCode.newInstance(mContext, mMongoDatabase, mStudents, FragmentRoutineDetails.this);
                 changeFragment(FragmentQRCode.class);
                 return true;
             case R.id.menu_aboutApp:
